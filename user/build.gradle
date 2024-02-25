@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.beomstagram.user'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//    implementation group: 'org.neo4j', name: 'neo4j-ogm-bolt-driver', version: '3.2.27' // 또는 다른 적절한 Neo4j 드라이버
+    implementation group: 'org.springframework.data', name: 'spring-data-neo4j'
+
+    implementation project(path: ':common')
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
