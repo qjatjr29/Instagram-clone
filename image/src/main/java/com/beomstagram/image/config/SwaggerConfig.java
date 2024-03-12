@@ -1,4 +1,4 @@
-package com.beomstagram.post.config;
+package com.beomstagram.image.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -11,7 +11,7 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Beomstagram - Post ")
+                        .title("Beomstagram - Image ")
                         .description("Beomstagram Post Controller")
                         .version("1.0.0"));
     }
