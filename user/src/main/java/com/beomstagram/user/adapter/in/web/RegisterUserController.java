@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @WebAdapter
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user-service")
 @RequiredArgsConstructor
 public class RegisterUserController {
 
