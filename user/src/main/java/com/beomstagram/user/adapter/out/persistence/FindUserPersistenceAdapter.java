@@ -19,7 +19,7 @@ public class FindUserPersistenceAdapter implements FindUserPort {
     @Override
     public UserEntity findByUserId(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
     }
 
     @Override
@@ -28,5 +28,15 @@ public class FindUserPersistenceAdapter implements FindUserPort {
                 .findAllByNameContainingOrNicknameContaining(keyword, keyword, pageable);
 
         return users;
+    }
+
+    @Override
+    public UserEntity findByEmail(String userEmail) {
+        return userRepository.findByEmail(userEmail);
+    }
+
+    @Override
+    public Boolean isExistsUser(Long userId) {
+        return userRepository.existsById(userId);
     }
 }
