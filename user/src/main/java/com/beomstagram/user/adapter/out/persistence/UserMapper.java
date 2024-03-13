@@ -7,11 +7,16 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
 
     public User mapToDomain(UserEntity userEntity) {
-        return User.generateUser(userEntity.getEmail(),
-                userEntity.getName(),
-                userEntity.getNickname(),
-                userEntity.getPhoneNumber(),
-                userEntity.getPassword(), "");
+        return User.builder()
+                .userId(userEntity.getId())
+                .email(userEntity.getEmail())
+                .name(userEntity.getName())
+                .nickname(userEntity.getNickname())
+                .phoneNumber(userEntity.getPhoneNumber())
+                .refreshToken(userEntity.getRefreshToken())
+                .profileImage(userEntity.getProfileImage())
+                .build();
+
     }
 
 }
