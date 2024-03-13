@@ -66,8 +66,20 @@ public class UserEntity {
     @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    private String refreshToken;
+
     public void updateName(String newName) {
         this.name = newName;
     }
 
+    public void checkPwd(String password) {
+        // todo : custom exception
+        if(!this.password.equals(password)) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void updateRefreshToken(final String token) {
+        this.refreshToken = token;
+    }
 }
