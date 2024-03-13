@@ -8,4 +8,6 @@ import org.springframework.data.domain.Pageable;
 public interface FindUserUseCase {
     User findByUserId(Long userId);
     Page<FindUserResultDto> findAllByNameOrNickName(Long userId, String keyword, Pageable pageable);
+
+    Boolean isExistsUser(Long userId);
 }

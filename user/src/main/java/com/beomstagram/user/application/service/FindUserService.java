@@ -47,4 +47,9 @@ public class FindUserService implements FindUserUseCase {
         return new PageImpl<>(findUserResults, pageable, userEntities.getTotalElements());
 
     }
+
+    @Override
+    public Boolean isExistsUser(Long userId) {
+        return findUserPort.isExistsUser(userId);
+    }
 }
