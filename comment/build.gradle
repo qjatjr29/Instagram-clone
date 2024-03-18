@@ -1,0 +1,66 @@
+plugins {
+    id 'java'
+    id 'com.palantir.docker' version '0.35.0'
+}
+
+group = 'com.beomstagram.comment.service'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = '17'
+}
+
+
+ext{
+    axonVersion = "4.9.3"
+    set('springCloudVersion', "2022.0.3")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation project(path: ':common')
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+docker {
+    println(tasks.bootJar.outputs.files)
+
+    // 이미지 이름 지정
+    def rp = (rootProject.name).toLowerCase()
+    name rp + '-' + project.name + ":" + version
+
+    // 어떤 Dockerfile을 사용해서 image를 만들 것인가
+    dockerfile file("../Dockerfile")
+
+    // 어떤 파일들을 Dockerfile (docker image)에 넣을 것인가 (복사)
+    files tasks.bootJar.outputs.files
+
+    // Dockerfile에 전달할 인자
+    buildArgs(['JAR_FILE': tasks.bootJar.outputs.files.singleFile.name])
+}
