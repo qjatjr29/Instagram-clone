@@ -19,7 +19,6 @@ public class AuthUserService implements AuthUserUseCase {
     private final AuthUserPort authUserPort;
     private final FindUserPort findUserPort;
     private final UpdateUserPort updateUserPort;
-//    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public JwtToken login(LoginUserCommand registerUserCommand) {
@@ -28,11 +27,11 @@ public class AuthUserService implements AuthUserUseCase {
         UserEntity userEntity = findUserPort.findByEmail(registerUserCommand.getUserEmail());
         userEntity.checkPwd(registerUserCommand.getPassword());
 
-        String jwtToken = authUserPort.generateJwtToken(userEntity.getId());
+        String jwtToken = authUserPort.generateJwtToken(userEntity.getId(), userEntity.getName());
         String refreshToken = authUserPort.generateRefreshToken(userEntity.getId());
 
         updateUserPort.updateRefreshToken(userEntity.getId(), refreshToken);
 
-        return JwtToken.generateJwtToken(userEntity.getId(), jwtToken, refreshToken);
+        return JwtToken.generateJwtToken(userEntity.getId(), userEntity.getName(), jwtToken, refreshToken);
     }
 }

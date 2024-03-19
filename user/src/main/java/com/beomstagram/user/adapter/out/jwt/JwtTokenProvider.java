@@ -30,13 +30,14 @@ public class JwtTokenProvider implements AuthUserPort {
     }
 
     @Override
-    public String generateJwtToken(Long id) {
+    public String generateJwtToken(Long id, String username) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtTokenExpirationInMs);
 
         Claims claims = Jwts.claims();
         claims.put("userId", id);
-
+        claims.put("username", username)
+;
         String subject = String.valueOf(id);
         return Jwts.builder()
                 .setClaims(claims)
