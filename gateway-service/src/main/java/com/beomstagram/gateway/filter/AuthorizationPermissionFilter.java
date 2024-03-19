@@ -1,6 +1,7 @@
 package com.beomstagram.gateway.filter;
 
 import com.beomstagram.gateway.filter.AuthorizationPermissionFilter.Config;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -45,6 +46,11 @@ public class AuthorizationPermissionFilter extends AbstractGatewayFilterFactory<
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
             }
 
+            Long userId = getUserId(jwt);
+            String username = getUserName(jwt);
+            request.mutate().header("userId", String.valueOf(userId)).build();
+            request.mutate().header("username", username).build();
+
             return chain.filter(exchange);
         });
     }
@@ -76,6 +82,24 @@ public class AuthorizationPermissionFilter extends AbstractGatewayFilterFactory<
 
         log.error(err);
         return response.setComplete();
+    }
+
+    private Long getUserId(String jwtToken) {
+        Claims claims = getClaims(jwtToken);
+        return claims.get("userId", Long.class);
+    }
+
+    private String getUserName(String jwtToken) {
+        Claims claims = getClaims(jwtToken);
+        return claims.get("username", String.class);
+    }
+
+    private Claims getClaims(String jwtToken) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(jwtToken)
+                .getBody();
     }
 
     public static class Config {
