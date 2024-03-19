@@ -9,4 +9,6 @@ public interface FindFeedUseCase {
     Page<Feed> findAllByUserId(Long userId, Pageable pageable);
 
     Feed findByFeedId(@Nullable Long userId, Long feedId);
+
+    Boolean isExistsFeed(Long feedId);
 }

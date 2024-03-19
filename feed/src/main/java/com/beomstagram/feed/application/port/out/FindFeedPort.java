@@ -8,4 +8,6 @@ public interface FindFeedPort {
     Page<FeedEntity> findAllByUserId(Long userId, Pageable pageable);
 
     FeedEntity findById(Long feedId);
+
+    Boolean isExitsFeed(Long feedId);
 }

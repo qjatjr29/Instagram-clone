@@ -43,4 +43,9 @@ public class FindFeedController {
         return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, feed);
     }
 
+    @GetMapping("/exists/{feedId}")
+    public Boolean isExistsFeed(@PathVariable("feedId") Long feedId) {
+        return findFeedUseCase.isExistsFeed(feedId);
+    }
+
 }

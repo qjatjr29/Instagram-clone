@@ -39,4 +39,9 @@ public class FindFeedService implements FindFeedUseCase {
         FeedEntity feedEntity = findFeedPort.findById(feedId);
         return feedMapper.mapToDomain(feedEntity);
     }
+
+    @Override
+    public Boolean isExistsFeed(Long feedId) {
+        return findFeedPort.isExitsFeed(feedId);
+    }
 }

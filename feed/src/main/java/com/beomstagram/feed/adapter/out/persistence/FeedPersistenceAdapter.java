@@ -37,4 +37,10 @@ public class FeedPersistenceAdapter implements PostFeedPort, FindFeedPort {
         return feedRepository.findById(feedId)
                 .orElseThrow(RuntimeException::new);
     }
+
+    @Override
+    public Boolean isExitsFeed(Long feedId) {
+        return feedRepository.existsById(feedId);
+    }
+
 }
