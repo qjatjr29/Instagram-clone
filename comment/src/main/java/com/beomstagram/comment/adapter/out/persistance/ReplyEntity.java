@@ -1,47 +1,43 @@
 package com.beomstagram.comment.adapter.out.persistance;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
-import lombok.AccessLevel;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Property;
 
-@Embeddable
-@Builder
-@Getter
+@Node("reply")
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Builder
 public class ReplyEntity implements Serializable {
 
-    @Column(name = "userId")
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Property(name = "userId")
     private Long userId;
 
-    @Column(name = "username")
+    @Property(name = "username")
     private String username;
 
-    @Column(name = "reply")
-    private String reply;
+    @Property(name = "reply_content")
+    private String content;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ReplyEntity that = (ReplyEntity) o;
-        return Objects.equals(userId, that.userId) && Objects.equals(username, that.username)
-                && Objects.equals(reply, that.reply);
-    }
+    @Property("created_at")
+    @CreatedDate
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, username, reply);
-    }
+    @Property("updated_at")
+    @LastModifiedBy
+    @Builder.Default
+    private LocalDateTime updatedAt = LocalDateTime.now();
 }
