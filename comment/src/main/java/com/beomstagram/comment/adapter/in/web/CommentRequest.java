@@ -1,4 +1,4 @@
 package com.beomstagram.comment.adapter.in.web;
 
-public record CommentRequest(String content) {}
+public record CommentRequest(String comment) {}
 
