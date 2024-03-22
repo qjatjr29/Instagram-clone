@@ -5,8 +5,6 @@ import com.beomstagram.comment.application.port.in.CommentUseCase;
 import com.beomstagram.comment.domain.Comment;
 import com.beomstagram.common.ApiResponse;
 import com.beomstagram.common.ApiResponseMessage;
-import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,17 +21,17 @@ public class CommentController {
     private final CommentUseCase commentUseCase;
 
     @PostMapping("/feed/{feedId}")
-    public ApiResponse<Comment> comment(
+    public ApiResponse<Comment> commentInFeed(
             @PathVariable("feedId") Long feedId,
             @RequestBody CommentRequest commentRequest,
-            @Nullable @RequestHeader("username") String username,
-            @Nullable @RequestHeader("userId") Long userId) {
+            @RequestHeader("username") String username,
+            @RequestHeader("userId") Long userId) {
 
         CommentCommand command = CommentCommand.builder()
                 .username(username)
                 .postId(feedId)
                 .userId(userId)
-                .content(commentRequest.content())
+                .content(commentRequest.comment())
                 .build();
 
         Comment comment = commentUseCase.commentFeed(command);
