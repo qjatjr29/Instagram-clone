@@ -13,19 +13,14 @@ import lombok.Getter;
 @Getter
 public class Comment {
 
-    private Long commentId;
-    private Long postId;
-    private Long userId;
-    private String username;
-    private String content;
-    private List<Reply> replyList;
-    private PostType postType;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private final Long commentId;
+    private final Long postId;
+    private final Long userId;
+    private final String content;
+    private final List<Reply> replyList;
+    private final Long replyCount;
+    private final PostType postType;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
-    public static Comment generateComment(Long commentId, Long postId, Long userId, String username, String content,
-                                          List<Reply> replyList, PostType postType,
-                                          LocalDateTime createdAt, LocalDateTime updatedAt) {
-        return new Comment(commentId, postId, userId, username, content, replyList, postType, createdAt, updatedAt);
-    }
 }

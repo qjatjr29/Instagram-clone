@@ -4,8 +4,11 @@ import com.beomstagram.comment.adapter.out.persistance.CommentEntity;
 import com.beomstagram.comment.adapter.out.persistance.CommentMapper;
 import com.beomstagram.comment.application.port.in.CommentCommand;
 import com.beomstagram.comment.application.port.in.CommentUseCase;
+import com.beomstagram.comment.application.port.in.UpdateCommentCommand;
+import com.beomstagram.comment.application.port.in.UpdateCommentUseCase;
 import com.beomstagram.comment.application.port.out.CommentPort;
 import com.beomstagram.comment.application.port.out.FindFeedPort;
+import com.beomstagram.comment.application.port.out.UpdateCommentPort;
 import com.beomstagram.comment.domain.Comment;
 import com.beomstagram.common.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 @UseCase
 @Transactional
 @RequiredArgsConstructor
-public class CommentService implements CommentUseCase {
+public class CommentService implements CommentUseCase, UpdateCommentUseCase {
 
     private final CommentPort commentPort;
+    private final UpdateCommentPort updateCommentPort;
     private final FindFeedPort findFeedPort;
     private final CommentMapper commentMapper;
 
@@ -30,8 +34,16 @@ public class CommentService implements CommentUseCase {
         // 존재 한다면, 댓글 로직 수행
         CommentEntity commentEntity = commentPort.commentInFeed(command.getPostId(),
                 command.getUserId(),
-                command.getUsername(),
                 command.getContent());
+
+        return commentMapper.mapToDomain(commentEntity);
+    }
+
+    @Override
+    public Comment updateComment(UpdateCommentCommand command) {
+
+        CommentEntity commentEntity = updateCommentPort
+                .updateContent(command.getCommentId(), command.getUserId(), command.getContent());
 
         return commentMapper.mapToDomain(commentEntity);
     }

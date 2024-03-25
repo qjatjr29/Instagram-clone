@@ -1,14 +1,14 @@
 package com.beomstagram.comment.application.service;
 
-import com.beomstagram.comment.adapter.out.persistance.CommentEntity;
-import com.beomstagram.comment.adapter.out.persistance.CommentMapper;
 import com.beomstagram.comment.adapter.out.persistance.ReplyEntity;
+import com.beomstagram.comment.adapter.out.persistance.ReplyMapper;
 import com.beomstagram.comment.application.port.in.ReplyCommand;
 import com.beomstagram.comment.application.port.in.ReplyUseCase;
-import com.beomstagram.comment.application.port.out.FindCommentPort;
+import com.beomstagram.comment.application.port.in.UpdateReplyCommand;
 import com.beomstagram.comment.application.port.out.ReplyPort;
 import com.beomstagram.comment.application.port.out.UpdateCommentPort;
-import com.beomstagram.comment.domain.Comment;
+import com.beomstagram.comment.application.port.out.UpdateReplyPort;
+import com.beomstagram.comment.domain.Reply;
 import com.beomstagram.common.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,17 +20,26 @@ public class ReplyService implements ReplyUseCase {
 
     private final ReplyPort replyPort;
     private final UpdateCommentPort updateCommentPort;
-    private final FindCommentPort findCommentPort;
-    private final CommentMapper commentMapper;
+    private final UpdateReplyPort updateReplyPort;
+    private final ReplyMapper replyMapper;
 
     @Override
-    public Comment reply(ReplyCommand command) {
+    public Reply reply(ReplyCommand command) {
 
-        CommentEntity commentEntity = findCommentPort.findById(command.getCommentId());
-        ReplyEntity replyEntity = replyPort.reply(command.getUserId(), command.getUsername(), command.getContent());
-        CommentEntity updatedCommentEntity = updateCommentPort.reply(commentEntity, replyEntity);
+        ReplyEntity replyEntity = replyPort.reply(command.getUserId(), command.getContent());
+        //todo : transactionEventListener
+        updateCommentPort.reply(command.getCommentId(), replyEntity);
 
-        return commentMapper.mapToDomain(updatedCommentEntity);
+        return replyMapper.mapToDomain(replyEntity);
+    }
+
+    @Override
+    public Reply updateReply(UpdateReplyCommand command) {
+
+        ReplyEntity replyEntity = updateReplyPort
+                .updateReply(command.getReplyId(), command.getUserId(), command.getContent());
+
+        return replyMapper.mapToDomain(replyEntity);
     }
 
 }

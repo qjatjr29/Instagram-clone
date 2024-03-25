@@ -37,4 +37,8 @@ public class ReplyEntity implements Serializable {
     @LastModifiedBy
     @Builder.Default
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

@@ -2,11 +2,14 @@ package com.beomstagram.comment.adapter.in.web;
 
 import com.beomstagram.comment.application.port.in.ReplyCommand;
 import com.beomstagram.comment.application.port.in.ReplyUseCase;
-import com.beomstagram.comment.domain.Comment;
+import com.beomstagram.comment.application.port.in.UpdateReplyCommand;
+import com.beomstagram.comment.domain.Reply;
 import com.beomstagram.common.ApiResponse;
 import com.beomstagram.common.ApiResponseMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,20 +24,34 @@ public class ReplyController {
     private final ReplyUseCase replyUseCase;
 
     @PostMapping("/reply")
-    public ApiResponse<Comment> reply(@RequestParam("comment") Long commentId,
+    public ApiResponse<Reply> reply(@RequestParam("comment") Long commentId,
                                     @RequestBody ReplyRequest replyRequest,
-                                    @RequestHeader("username") String username,
                                     @RequestHeader("userId") Long userId) {
 
         ReplyCommand command = ReplyCommand.builder()
                 .commentId(commentId)
-                .username(username)
                 .userId(userId)
                 .content(replyRequest.content())
                 .build();
 
-        Comment comment = replyUseCase.reply(command);
+        Reply reply = replyUseCase.reply(command);
 
-        return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, comment);
+        return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, reply);
+    }
+
+    @PutMapping("/reply/{replyId}")
+    public ApiResponse<Reply> modifyReply(@PathVariable("replyId") Long replyId,
+                                            @RequestBody ReplyRequest replyRequest,
+                                            @RequestHeader("userId") Long userId) {
+
+        UpdateReplyCommand command = UpdateReplyCommand.builder()
+                .replyId(replyId)
+                .userId(userId)
+                .content(replyRequest.content())
+                .build();
+
+        Reply reply = replyUseCase.updateReply(command);
+
+        return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, reply);
     }
 }
