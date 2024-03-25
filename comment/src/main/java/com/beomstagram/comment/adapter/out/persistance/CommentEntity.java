@@ -2,6 +2,7 @@ package com.beomstagram.comment.adapter.out.persistance;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,9 +32,6 @@ public class CommentEntity implements Serializable {
     @Property(name = "user_id")
     private Long userId;
 
-    @Property(name = "user_name")
-    private String username;
-
     @Property(name = "content")
     private String content;
 
@@ -41,7 +39,8 @@ public class CommentEntity implements Serializable {
     private PostType postType;
 
     @Property(name = "reply_count")
-    private Long replyCount;
+    @Builder.Default
+    private Long replyCount = 0L;
 
     @Property("is_deleted")
     @Builder.Default
@@ -58,10 +57,15 @@ public class CommentEntity implements Serializable {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @Relationship(type = "REPLY", direction = Relationship.Direction.OUTGOING)
-    private List<ReplyEntity> replies;
+    @Builder.Default
+    private List<ReplyEntity> replyList = new ArrayList<>();
 
     public void addReply(final ReplyEntity replyEntity) {
-        this.replies.add(replyEntity);
+        this.replyList.add(replyEntity);
         this.replyCount += 1;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
     }
 }

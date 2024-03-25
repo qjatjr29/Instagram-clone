@@ -13,17 +13,18 @@ public class CommentMapper {
     }
 
     public Comment mapToDomain(CommentEntity commentEntity) {
-        return Comment.generateComment(
-                commentEntity.getId(),
-                commentEntity.getPostId(),
-                commentEntity.getUserId(),
-                commentEntity.getUsername(),
-                commentEntity.getContent(),
-                commentEntity.getReplies().stream()
+        return Comment.builder()
+                .commentId(commentEntity.getId())
+                .userId(commentEntity.getUserId())
+                .postId(commentEntity.getPostId())
+                .content(commentEntity.getContent())
+                .replyList(commentEntity.getReplyList()
+                        .stream()
                         .map(replyMapper::mapToDomain)
-                        .toList(),
-                commentEntity.getPostType(),
-                commentEntity.getCreatedAt(),
-                commentEntity.getUpdatedAt());
+                        .toList())
+                .replyCount(commentEntity.getReplyCount())
+                .postType(commentEntity.getPostType())
+                .createdAt(commentEntity.getCreatedAt())
+                .build();
     }
 }
