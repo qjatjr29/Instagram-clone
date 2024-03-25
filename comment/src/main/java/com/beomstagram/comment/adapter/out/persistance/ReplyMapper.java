@@ -6,10 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReplyMapper {
 
-    public
-    Reply mapToDomain(ReplyEntity replyEntity) {
+    public Reply mapToDomain(ReplyEntity replyEntity) {
         return Reply.generateReply(replyEntity.getId(),
-                replyEntity.getUsername(),
+                replyEntity.getUserId(),
                 replyEntity.getContent(),
                 replyEntity.getCreatedAt());
     }

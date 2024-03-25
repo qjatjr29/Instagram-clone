@@ -11,11 +11,11 @@ import lombok.Getter;
 @Getter
 public class Reply {
     private Long replyId;
-    private String username;
+    private Long userId;
     private String content;
     private LocalDateTime createdAt;
 
-    public static Reply generateReply(Long replyId, String username, String content, LocalDateTime createdAt) {
-        return new Reply(replyId, username, content, createdAt);
+    public static Reply generateReply(Long replyId, Long userId, String content, LocalDateTime createdAt) {
+        return new Reply(replyId, userId, content, createdAt);
     }
 }

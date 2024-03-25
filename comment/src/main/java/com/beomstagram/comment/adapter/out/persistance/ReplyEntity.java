@@ -25,9 +25,6 @@ public class ReplyEntity implements Serializable {
     @Property(name = "userId")
     private Long userId;
 
-    @Property(name = "username")
-    private String username;
-
     @Property(name = "reply_content")
     private String content;
 
