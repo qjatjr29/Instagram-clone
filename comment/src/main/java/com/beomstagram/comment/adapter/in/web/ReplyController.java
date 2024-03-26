@@ -1,5 +1,6 @@
 package com.beomstagram.comment.adapter.in.web;
 
+import com.beomstagram.comment.application.port.in.DeleteReplyCommand;
 import com.beomstagram.comment.application.port.in.ReplyCommand;
 import com.beomstagram.comment.application.port.in.ReplyUseCase;
 import com.beomstagram.comment.application.port.in.UpdateReplyCommand;
@@ -7,6 +8,7 @@ import com.beomstagram.comment.domain.Reply;
 import com.beomstagram.common.ApiResponse;
 import com.beomstagram.common.ApiResponseMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -53,5 +55,19 @@ public class ReplyController {
         Reply reply = replyUseCase.updateReply(command);
 
         return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, reply);
+    }
+
+    @DeleteMapping("/reply/{replyId}")
+    public ApiResponse<Void> deleteReply(@PathVariable("replyId") Long replyId,
+                                         @RequestHeader("userId") Long userId) {
+
+        DeleteReplyCommand command = DeleteReplyCommand.builder()
+                .replyId(replyId)
+                .userId(userId)
+                .build();
+
+        replyUseCase.deleteReply(command);
+
+        return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST);
     }
 }

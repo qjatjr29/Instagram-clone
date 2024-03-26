@@ -4,4 +4,5 @@ import com.beomstagram.comment.domain.Comment;
 
 public interface UpdateCommentUseCase {
     Comment updateComment(UpdateCommentCommand command);
+    void deleteComment(DeleteCommentCommand command);
 }

@@ -1,5 +1,7 @@
 package com.beomstagram.comment.adapter.out.persistance;
 
+import static java.lang.Thread.sleep;
+
 import com.beomstagram.comment.application.port.out.CommentPort;
 import com.beomstagram.comment.application.port.out.UpdateCommentPort;
 import com.beomstagram.common.annotation.PersistenceAdapter;
@@ -27,22 +29,27 @@ public class CommentAdapter implements CommentPort, UpdateCommentPort {
 
     @Override
     public void reply(Long commentId, ReplyEntity replyEntity) {
-
         CommentEntity commentEntity = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException());
-
         commentEntity.addReply(replyEntity);
         commentRepository.save(commentEntity);
     }
 
     @Override
-    public CommentEntity updateContent(Long commentId, Long userId, String content) {
+    public CommentEntity updateComment(Long commentId, Long userId, String content) {
 
         CommentEntity commentEntity = commentRepository.findByIdAndUserId(commentId, userId)
                 .orElseThrow(() -> new IllegalArgumentException());
 
         commentEntity.updateContent(content);
         return commentRepository.save(commentEntity);
+    }
+
+    @Override
+    public void deleteComment(Long commentId, Long userId) {
+        CommentEntity commentEntity = commentRepository.findByIdAndUserId(commentId, userId)
+                .orElseThrow(() -> new IllegalArgumentException());
+        commentRepository.delete(commentEntity);
     }
 
 }

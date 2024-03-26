@@ -12,9 +12,10 @@ public class ReplyAdapter implements ReplyPort, UpdateReplyPort {
     private final ReplyRepository replyRepository;
 
     @Override
-    public ReplyEntity reply(Long userId, String content) {
+    public ReplyEntity reply(Long commentId, Long userId, String content) {
 
         ReplyEntity replyEntity = ReplyEntity.builder()
+                .commentId(commentId)
                 .userId(userId)
                 .content(content)
                 .build();
@@ -25,10 +26,32 @@ public class ReplyAdapter implements ReplyPort, UpdateReplyPort {
     @Override
     public ReplyEntity updateReply(Long replyId, Long userId, String content) {
 
-        ReplyEntity replyEntity = replyRepository.findByIdAndUserId(replyId, userId)
-                        .orElseThrow(() -> new IllegalArgumentException());
+        ReplyEntity replyEntity = replyRepository.findById(replyId)
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        if(!replyEntity.isWriter(userId)) {
+            throw new IllegalArgumentException();
+        }
 
         replyEntity.updateContent(content);
         return replyRepository.save(replyEntity);
+    }
+
+    @Override
+    public void deleteById(Long replyId, Long userId) {
+
+        ReplyEntity replyEntity = replyRepository.findById(replyId)
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        if(!replyEntity.isWriter(userId)) {
+            throw new IllegalArgumentException();
+        }
+
+        replyRepository.deleteById(replyId);
+    }
+
+    @Override
+    public void deleteByCommentId(Long commentId) {
+        replyRepository.deleteByCommentId(commentId);
     }
 }

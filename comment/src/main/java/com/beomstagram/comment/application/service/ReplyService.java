@@ -2,6 +2,7 @@ package com.beomstagram.comment.application.service;
 
 import com.beomstagram.comment.adapter.out.persistance.ReplyEntity;
 import com.beomstagram.comment.adapter.out.persistance.ReplyMapper;
+import com.beomstagram.comment.application.port.in.DeleteReplyCommand;
 import com.beomstagram.comment.application.port.in.ReplyCommand;
 import com.beomstagram.comment.application.port.in.ReplyUseCase;
 import com.beomstagram.comment.application.port.in.UpdateReplyCommand;
@@ -26,8 +27,7 @@ public class ReplyService implements ReplyUseCase {
     @Override
     public Reply reply(ReplyCommand command) {
 
-        ReplyEntity replyEntity = replyPort.reply(command.getUserId(), command.getContent());
-        //todo : transactionEventListener
+        ReplyEntity replyEntity = replyPort.reply(command.getCommentId(), command.getUserId(), command.getContent());
         updateCommentPort.reply(command.getCommentId(), replyEntity);
 
         return replyMapper.mapToDomain(replyEntity);
@@ -40,6 +40,11 @@ public class ReplyService implements ReplyUseCase {
                 .updateReply(command.getReplyId(), command.getUserId(), command.getContent());
 
         return replyMapper.mapToDomain(replyEntity);
+    }
+
+    @Override
+    public void deleteReply(DeleteReplyCommand command) {
+        updateReplyPort.deleteById(command.getReplyId(), command.getUserId());
     }
 
 }

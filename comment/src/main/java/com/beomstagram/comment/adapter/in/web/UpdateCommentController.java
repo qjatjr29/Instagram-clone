@@ -1,11 +1,13 @@
 package com.beomstagram.comment.adapter.in.web;
 
+import com.beomstagram.comment.application.port.in.DeleteCommentCommand;
 import com.beomstagram.comment.application.port.in.UpdateCommentCommand;
 import com.beomstagram.comment.application.port.in.UpdateCommentUseCase;
 import com.beomstagram.comment.domain.Comment;
 import com.beomstagram.common.ApiResponse;
 import com.beomstagram.common.ApiResponseMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +36,20 @@ public class UpdateCommentController {
         Comment comment = updateCommentUseCase.updateComment(command);
 
         return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, comment);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ApiResponse<Void> deleteComment(@PathVariable("commentId") Long commentId,
+                                           @RequestHeader("userId") Long userId) {
+
+        DeleteCommentCommand command = DeleteCommentCommand.builder()
+                .commentId(commentId)
+                .userId(userId)
+                .build();
+
+        updateCommentUseCase.deleteComment(command);
+
+        return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST);
     }
 
 }

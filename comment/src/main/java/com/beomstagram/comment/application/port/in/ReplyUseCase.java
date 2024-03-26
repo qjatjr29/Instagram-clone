@@ -6,4 +6,6 @@ public interface ReplyUseCase {
     Reply reply(ReplyCommand command);
 
     Reply updateReply(UpdateReplyCommand command);
+
+    void deleteReply(DeleteReplyCommand command);
 }

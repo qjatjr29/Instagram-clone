@@ -2,6 +2,7 @@ package com.beomstagram.comment.adapter.out.persistance;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +23,10 @@ public class ReplyEntity implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Property(name = "userId")
+    @Property(name = "comment_id")
+    private Long commentId;
+
+    @Property(name = "user_id")
     private Long userId;
 
     @Property(name = "reply_content")
@@ -40,5 +44,9 @@ public class ReplyEntity implements Serializable {
 
     public void updateContent(String content) {
         this.content = content;
+    }
+
+    public boolean isWriter(Long userId) {
+        return Objects.equals(this.userId, userId);
     }
 }
