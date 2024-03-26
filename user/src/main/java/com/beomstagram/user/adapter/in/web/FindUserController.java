@@ -4,9 +4,10 @@ import com.beomstagram.common.ApiResponse;
 import com.beomstagram.common.ApiResponseMessage;
 import com.beomstagram.common.annotation.WebAdapter;
 import com.beomstagram.user.application.port.in.FindUserUseCase;
+import com.beomstagram.user.domain.FollowingUser;
 import com.beomstagram.user.domain.User;
 import jakarta.annotation.Nullable;
-import jakarta.ws.rs.Path;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,5 +48,18 @@ public class FindUserController {
     public Boolean isExistsUser(@PathVariable("userId") Long userId) {
         return findUserUseCase.isExistsUser(userId);
     }
+
+    @GetMapping("/{userId}/following")
+    public ApiResponse<List<FollowingUser>> findUserFollowing(@PathVariable("userId") Long userId) {
+        List<FollowingUser> followings = findUserUseCase.findFollowingById(userId);
+        return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, followings);
+    }
+
+    @GetMapping("/{userId}/follower")
+    public ApiResponse<List<FollowingUser>> findUserFollower(@PathVariable("userId") Long userId) {
+        List<FollowingUser> followers = findUserUseCase.findFollowerById(userId);
+        return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, followers);
+    }
+
 
 }

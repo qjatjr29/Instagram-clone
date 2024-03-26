@@ -7,6 +7,7 @@ import com.beomstagram.user.adapter.out.persistence.UserMapper;
 import com.beomstagram.user.application.port.in.FindUserUseCase;
 import com.beomstagram.user.application.port.out.FindUserPort;
 import com.beomstagram.user.application.port.out.FollowUserPort;
+import com.beomstagram.user.domain.FollowingUser;
 import com.beomstagram.user.domain.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -51,5 +52,23 @@ public class FindUserService implements FindUserUseCase {
     @Override
     public Boolean isExistsUser(Long userId) {
         return findUserPort.isExistsUser(userId);
+    }
+
+    @Override
+    public List<FollowingUser> findFollowingById(Long userId) {
+        List<UserEntity> followingUserEntityList = findUserPort.findFollowingById(userId);
+
+        return followingUserEntityList.stream()
+                .map(userMapper::mapToFollowingUser)
+                .toList();
+    }
+
+    @Override
+    public List<FollowingUser> findFollowerById(Long userId) {
+        List<UserEntity> followerEntityList = findUserPort.findFollowersById(userId);
+
+        return followerEntityList.stream()
+                .map(userMapper::mapToFollowingUser)
+                .toList();
     }
 }

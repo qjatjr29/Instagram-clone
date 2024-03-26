@@ -1,5 +1,6 @@
 package com.beomstagram.user.adapter.out.persistence;
 
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
@@ -18,4 +19,10 @@ public interface UserRepository extends Neo4jRepository<UserEntity, Long> {
     int findCommonFollowersCount(@Param("userId") Long userId, @Param("targetUserId") Long targetUserId);
 
     UserEntity findByEmail(String userEmail);
+
+    @Query("MATCH (user:user)-[:FOLLOWER]->(follower:user) WHERE id(user) = $userId RETURN collect(follower)")
+    List<UserEntity> findFollowersByUserId(@Param("userId") Long userId);
+
+    @Query("MATCH (user:user)-[:FOLLOWING]->(following:user) WHERE id(user) = $userId RETURN collect(following)")
+    List<UserEntity> findFollowingByUserId(@Param("userId") Long userId);
 }

@@ -24,18 +24,10 @@ public class FollowUserPersistenceAdapter implements FollowUserPort {
         UserEntity follower = userRepository.findById(followerId)
                 .orElseThrow(() -> new IllegalArgumentException());
 
-//        follower.getFollowers().add(user);
+        follower.getFollowers().add(user);
         user.getFollowing().add(follower);
 
         return userRepository.save(user);
-    }
-
-    @Override
-    public Page<UserEntity> findFollowing(Long userId, Pageable pageable) {
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-
-        return new PageImpl<>(user.getFollowing(), pageable, user.getFollowing().size());
     }
 
     @Override
@@ -48,13 +40,5 @@ public class FollowUserPersistenceAdapter implements FollowUserPort {
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
 
         return userRepository.findCommonFollowersCount(userId, targetUserId);
-    }
-
-    @Override
-    public Page<UserEntity> findFollowers(Long userId, Pageable pageable) {
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-
-        return new PageImpl<>(user.getFollowers(), pageable, user.getFollowers().size());
     }
 }

@@ -2,6 +2,7 @@ package com.beomstagram.user.adapter.out.persistence;
 
 import com.beomstagram.common.annotation.PersistenceAdapter;
 import com.beomstagram.user.application.port.out.FindUserPort;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,5 +39,15 @@ public class FindUserPersistenceAdapter implements FindUserPort {
     @Override
     public Boolean isExistsUser(Long userId) {
         return userRepository.existsById(userId);
+    }
+
+    @Override
+    public List<UserEntity> findFollowingById(Long userId) {
+        return userRepository.findFollowingByUserId(userId);
+    }
+
+    @Override
+    public List<UserEntity> findFollowersById(Long userId) {
+        return userRepository.findFollowersByUserId(userId);
     }
 }
