@@ -1,5 +1,6 @@
 package com.beomstagram.user.domain;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,7 @@ public class User {
     private final String nickname;
     private final String phoneNumber;
     private final String profileImage;
-    private final String refreshToken;
+    private final List<FollowingUser> followingList;
     // todo : 공개, 비공개
     // private final Boolean isPrivate;
 

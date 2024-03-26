@@ -1,6 +1,7 @@
 package com.beomstagram.user.adapter.out.persistence;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -46,11 +47,13 @@ public class UserEntity {
     @Property("profile_image")
     private String profileImage;
 
-    @Relationship(type = "FOLLOWS")
-    private List<UserEntity> following;
+    @Relationship(type = "FOLLOWING")
+    @Builder.Default
+    private List<UserEntity> following = new ArrayList<>();
 
-    @Relationship(type = "FOLLOWS", direction = Relationship.Direction.INCOMING)
-    private List<UserEntity> followers;
+    @Relationship(type = "FOLLOWER")
+    @Builder.Default
+    private List<UserEntity> followers = new ArrayList<>();
 
     @Property("is_deleted")
     @Builder.Default
