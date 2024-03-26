@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,8 +24,8 @@ public class PostFeedController {
 
     private final PostFeedUseCase postFeedUseCase;
 
-    @PostMapping("/post/{userId}")
-    public ApiResponse<Feed> postFeed(@PathVariable("userId") Long userId,
+    @PostMapping("/post")
+    public ApiResponse<Feed> postFeed(@RequestHeader("userId") Long userId,
                                   @RequestPart("feedRequest") FeedRequest feedRequest,
                                   @RequestPart("image") List<MultipartFile> image) {
 
