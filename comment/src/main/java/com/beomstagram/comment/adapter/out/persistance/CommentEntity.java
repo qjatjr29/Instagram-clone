@@ -32,6 +32,12 @@ public class CommentEntity implements Serializable {
     @Property(name = "user_id")
     private Long userId;
 
+    @Property(name = "user_name")
+    private String username;
+
+    @Property(name = "profile_image")
+    private String profileImage;
+
     @Property(name = "content")
     private String content;
 

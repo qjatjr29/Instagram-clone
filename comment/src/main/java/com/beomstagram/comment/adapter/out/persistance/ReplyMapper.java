@@ -9,6 +9,8 @@ public class ReplyMapper {
     public Reply mapToDomain(ReplyEntity replyEntity) {
         return Reply.generateReply(replyEntity.getId(),
                 replyEntity.getUserId(),
+                replyEntity.getUsername(),
+                replyEntity.getProfileImage(),
                 replyEntity.getContent(),
                 replyEntity.getCreatedAt());
     }

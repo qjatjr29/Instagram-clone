@@ -16,14 +16,16 @@ public class CommentMapper {
         return Comment.builder()
                 .commentId(commentEntity.getId())
                 .userId(commentEntity.getUserId())
-                .postId(commentEntity.getPostId())
+//                .postId(commentEntity.getPostId())
+                .username(commentEntity.getUsername())
+                .profileImage(commentEntity.getProfileImage())
                 .content(commentEntity.getContent())
                 .replyList(commentEntity.getReplyList()
                         .stream()
                         .map(replyMapper::mapToDomain)
                         .toList())
                 .replyCount(commentEntity.getReplyCount())
-                .postType(commentEntity.getPostType())
+//                .postType(commentEntity.getPostType())
                 .createdAt(commentEntity.getCreatedAt())
                 .build();
     }

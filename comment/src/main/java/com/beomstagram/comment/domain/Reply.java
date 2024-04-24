@@ -12,10 +12,13 @@ import lombok.Getter;
 public class Reply {
     private Long replyId;
     private Long userId;
+    private String username;
+    private String profileImage;
     private String content;
     private LocalDateTime createdAt;
 
-    public static Reply generateReply(Long replyId, Long userId, String content, LocalDateTime createdAt) {
-        return new Reply(replyId, userId, content, createdAt);
+    public static Reply generateReply(Long replyId, Long userId, String username, String profileImage,
+                                      String content, LocalDateTime createdAt) {
+        return new Reply(replyId, userId, username, profileImage, content, createdAt);
     }
 }
