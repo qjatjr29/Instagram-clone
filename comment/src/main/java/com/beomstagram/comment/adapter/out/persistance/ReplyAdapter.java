@@ -12,11 +12,12 @@ public class ReplyAdapter implements ReplyPort, UpdateReplyPort {
     private final ReplyRepository replyRepository;
 
     @Override
-    public ReplyEntity reply(Long commentId, Long userId, String content) {
-
+    public ReplyEntity reply(Long commentId, Long userId, String username, String profileImage, String content) {
         ReplyEntity replyEntity = ReplyEntity.builder()
                 .commentId(commentId)
                 .userId(userId)
+                .username(username)
+                .profileImage(profileImage)
                 .content(content)
                 .build();
 

@@ -1,7 +1,5 @@
 package com.beomstagram.comment.adapter.out.persistance;
 
-import static java.lang.Thread.sleep;
-
 import com.beomstagram.comment.application.port.out.CommentPort;
 import com.beomstagram.comment.application.port.out.UpdateCommentPort;
 import com.beomstagram.common.annotation.PersistenceAdapter;
@@ -14,11 +12,12 @@ public class CommentAdapter implements CommentPort, UpdateCommentPort {
     private final CommentRepository commentRepository;
 
     @Override
-    public CommentEntity commentInFeed(Long postId, Long userId, String content) {
-
+    public CommentEntity commentInFeed(Long postId, Long userId, String username, String profileImage, String content) {
         CommentEntity commentEntity = CommentEntity.builder()
                 .postId(postId)
                 .userId(userId)
+                .username(username)
+                .profileImage(profileImage)
                 .content(content)
                 .postType(PostType.FEED)
                 .build();
