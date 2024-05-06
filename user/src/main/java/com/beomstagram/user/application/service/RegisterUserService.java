@@ -7,19 +7,16 @@ import com.beomstagram.user.application.port.in.RegisterUserCommand;
 import com.beomstagram.user.application.port.in.RegisterUserUseCase;
 import com.beomstagram.user.application.port.out.RegisterUserPort;
 import com.beomstagram.user.domain.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @UseCase
-//@Transactional
+@Transactional
+@RequiredArgsConstructor
 public class RegisterUserService implements RegisterUserUseCase {
 
     private final RegisterUserPort registerUserPort;
     private final UserMapper userMapper;
-
-    public RegisterUserService(RegisterUserPort registerUserPort, UserMapper userMapper) {
-        this.registerUserPort = registerUserPort;
-        this.userMapper = userMapper;
-    }
 
     @Override
     public User registerUser(RegisterUserCommand registerUserCommand) {
