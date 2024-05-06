@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @WebAdapter
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user-service")
 @RequiredArgsConstructor
 public class UpdateUserController {
 
@@ -33,7 +33,5 @@ public class UpdateUserController {
 
         return new ApiResponse<>(ApiResponseMessage.SUCCESS_REQUEST, user);
     }
-
-    // todo : profile image 변경
 
 }
