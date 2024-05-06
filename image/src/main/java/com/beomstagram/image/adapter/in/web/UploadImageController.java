@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController("/image-service")
+@RestController
 @RequiredArgsConstructor
 public class UploadImageController {
 
     private final UploadImageUseCase uploadImageUseCase;
 
-    @PostMapping("/image")
+    @PostMapping()
     public UploadedImage uploadImage(@RequestPart("image") MultipartFile imageFile) {
 
         UploadImageCommand command = UploadImageCommand
