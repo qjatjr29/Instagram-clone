@@ -3,6 +3,7 @@ package com.beomstagram.image.adapter.out.external.aws;
 import com.amazonaws.services.s3.AmazonS3;
 import com.beomstagram.common.annotation.ExternalSystemAdapter;
 import com.beomstagram.image.application.port.out.DeleteImagePort;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -16,7 +17,21 @@ public class DeleteImageAdapter implements DeleteImagePort {
     private String bucket;
 
     @Override
-    public void deleteImage(String filename) {
+    public void deleteImage(String imageName) {
+        delete(imageName);
+    }
+
+    @Override
+    public void deleteImages(List<String> imageNames) {
+        for(String imageName : imageNames) {
+            delete(imageName);
+        }
+        for(String imageName : imageNames) {
+            delete(imageName);
+        }
+    }
+
+    private void delete(String filename) {
         try {
             boolean isObjectExist = amazonS3.doesObjectExist(bucket, filename);
             if (isObjectExist) {
@@ -26,6 +41,5 @@ public class DeleteImageAdapter implements DeleteImagePort {
         } catch (Exception e) {
             throw new RuntimeException();
         }
-
     }
 }
