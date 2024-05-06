@@ -1,4 +1,4 @@
-package com.beomstagram.common;
+package com.beomstagram.common.config;
 
 import com.beomstagram.common.event.Events;
 import lombok.RequiredArgsConstructor;
