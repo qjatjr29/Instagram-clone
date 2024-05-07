@@ -1,8 +1,8 @@
 package com.beomstagram.user.adapter.out.kafka;
 
-import com.beomstagram.common.event.UserNameUpdatedEvent;
-import com.beomstagram.common.event.UserProfileImageUpdatedEvent;
-import com.beomstagram.common.event.UserUpdateType;
+import com.beomstagram.common.event.user.UserNameUpdatedEvent;
+import com.beomstagram.common.event.user.UserProfileImageUpdatedEvent;
+import com.beomstagram.common.event.user.UserUpdateType;
 import jakarta.annotation.Nullable;
 import java.io.Serializable;
 import lombok.Builder;

@@ -1,7 +1,7 @@
 package com.beomstagram.user.adapter.out.kafka;
 
-import com.beomstagram.common.event.UserNameUpdatedEvent;
-import com.beomstagram.common.event.UserProfileImageUpdatedEvent;
+import com.beomstagram.common.event.user.UserNameUpdatedEvent;
+import com.beomstagram.common.event.user.UserProfileImageUpdatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;

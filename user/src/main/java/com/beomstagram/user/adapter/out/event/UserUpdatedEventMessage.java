@@ -1,8 +1,8 @@
 package com.beomstagram.user.adapter.out.event;
 
-import com.beomstagram.common.event.UserNameUpdatedEvent;
-import com.beomstagram.common.event.UserProfileImageUpdatedEvent;
-import com.beomstagram.common.event.UserUpdateType;
+import com.beomstagram.common.event.user.UserNameUpdatedEvent;
+import com.beomstagram.common.event.user.UserProfileImageUpdatedEvent;
+import com.beomstagram.common.event.user.UserUpdateType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

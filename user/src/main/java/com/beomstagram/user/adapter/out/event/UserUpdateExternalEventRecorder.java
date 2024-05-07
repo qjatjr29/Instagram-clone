@@ -1,6 +1,6 @@
 package com.beomstagram.user.adapter.out.event;
 
-import com.beomstagram.common.event.UserUpdateType;
+import com.beomstagram.common.event.user.UserUpdateType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
