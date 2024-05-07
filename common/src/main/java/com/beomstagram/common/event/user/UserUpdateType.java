@@ -1,4 +1,4 @@
-package com.beomstagram.common.event;
+package com.beomstagram.common.event.user;
 
 public enum UserUpdateType {
     NAME,
