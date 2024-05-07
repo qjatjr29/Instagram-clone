@@ -1,16 +1,18 @@
-package com.beomstagram.user.adapter.out.kafka;
+package com.beomstagram.common.event.user;
 
-import com.beomstagram.common.event.user.UserNameUpdatedEvent;
-import com.beomstagram.common.event.user.UserProfileImageUpdatedEvent;
-import com.beomstagram.common.event.user.UserUpdateType;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.annotation.Nullable;
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserUpdatedEventMessagePayload implements Serializable {
 
     @NonNull
