@@ -1,6 +1,6 @@
 package com.beomstagram.user.config;
 
-import com.beomstagram.user.adapter.out.kafka.UserUpdatedEventMessagePayload;
+import com.beomstagram.common.event.user.UserUpdatedEventMessagePayload;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.admin.AdminClientConfig;

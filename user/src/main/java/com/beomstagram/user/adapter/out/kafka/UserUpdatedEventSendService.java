@@ -1,5 +1,6 @@
 package com.beomstagram.user.adapter.out.kafka;
 
+import com.beomstagram.common.event.user.UserUpdatedEventMessagePayload;
 import com.beomstagram.user.adapter.out.event.UserUpdateExternalEventRecorder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
