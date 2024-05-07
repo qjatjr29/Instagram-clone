@@ -7,4 +7,6 @@ public interface UpdateCommentPort {
     void reply(Long commentId, ReplyEntity replyEntity);
     CommentEntity updateComment(Long commentId, Long userId, String content);
     void deleteComment(Long commentId, Long userId);
+
+    void updateUserInfo(Long userId, String username, String profileImage);
 }

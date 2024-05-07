@@ -51,4 +51,13 @@ public class CommentAdapter implements CommentPort, UpdateCommentPort {
         commentRepository.delete(commentEntity);
     }
 
+    @Override
+    public void updateUserInfo(Long userId, String username, String profileImage) {
+        CommentEntity commentEntity = commentRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        commentEntity.updateUserInfo(username, profileImage);
+        commentRepository.save(commentEntity);
+    }
+
 }

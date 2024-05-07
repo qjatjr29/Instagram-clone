@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -73,5 +74,18 @@ public class CommentEntity implements Serializable {
 
     public void updateContent(String content) {
         this.content = content;
+    }
+
+    public void updateUserInfo(String username, String profileImage) {
+        if(!isBlank(username)) {
+            this.username = username;
+        }
+        if(!isBlank(profileImage)) {
+            this.profileImage = profileImage;
+        }
+    }
+
+    private boolean isBlank(String target) {
+        return Strings.isBlank(target);
     }
 }

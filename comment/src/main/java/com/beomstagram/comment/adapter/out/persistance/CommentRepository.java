@@ -21,4 +21,6 @@ public interface CommentRepository extends Neo4jRepository<CommentEntity, Long>{
             + "WHERE id(c) = $commentId AND c.user_id = $userId "
             + "DETACH DELETE c, p")
     void deleteByIdAndUserId(Long commentId, Long userId);
+
+    Optional<CommentEntity> findByUserId(Long userId);
 }
