@@ -9,6 +9,7 @@
 
 ### ERD
 
+<img width="656" alt="erd" src="https://github.com/qjatjr29/Instagram-clone/assets/74031333/c0e2085f-1f83-41f5-ba98-d08bf79f9a0f">
 
 ### 🔧 사용 기술
 
